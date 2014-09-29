@@ -29,8 +29,7 @@ namespace httpserver
             string answer = "";
             while (message != null && message != "")
             {
-                Console.WriteLine("Client: " + message);
-                answer = message.ToUpper();
+                Console.WriteLine("Hello world");
                 sw.WriteLine(answer);
                 message = sr.ReadLine();
             }
