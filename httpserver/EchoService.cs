@@ -37,6 +37,8 @@ namespace httpserver
             ns.Close();
             connectionSocket.Close();
             //serverSocket.Stop();
+
+            // Ny klasse
         }
 
     }
