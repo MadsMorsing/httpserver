@@ -34,6 +34,7 @@ namespace httpserver
                         //StreamWriter sw = new StreamWriter(ns);
                         //sw.AutoFlush = true; // enable automatic flushing
 
+
                         EchoService es = new EchoService(connectionSocket);
 
                         Thread t = new Thread(es.doIt);
