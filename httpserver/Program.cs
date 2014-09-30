@@ -41,12 +41,10 @@ namespace httpserver
             words = message.Split(' ');
                 Console.WriteLine("tester" + words.GetValue(1));
 
-                string message1 = words[1].Replace("/", "");
-
                 sw.Write(
                     "HTTP/1.1 200 OK\r\n" +
                     "\r\n" +
-                    "You have requested file: {0}", message1);
+                    "You have requested file: {0}", message);
 
 
                 //Console.WriteLine("client" + message);
@@ -63,21 +61,7 @@ namespace httpserver
             }
 
 
-            //string message = sr.ReadLine();
-            //string answer = "";
-            //while (message != null && message != "")
-            //{
-
-            //    Console.WriteLine("Client: " + message);
-            //    answer = message.ToUpper();
-            //    sw.WriteLine(answer);
-            //    message = sr.ReadLine();
-
-            //}
-
-            //ns.Close();
-            //connectionSocket.Close();
-            //serverSocket.Stop();
+      
 
             
              
