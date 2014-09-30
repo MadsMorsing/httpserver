@@ -34,24 +34,47 @@ namespace httpserver
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // enable automatic flushing
 
-            string getRequest = sr.ReadLine();
-
-
-            string message = sr.ReadLine();
-            string answer = "";
-            while (message != null && message != "")
+            try
             {
+                string message = sr.ReadLine();
+                string[] words = message.Split(' ');
+                string message1 = words[1].Replace("/", "");
 
-                Console.WriteLine("Client: " + message);
-                answer = message.ToUpper();
-                sw.WriteLine(answer);
-                message = sr.ReadLine();
+                sw.Write(
+                    "HTTP/1.1 200 OK\r\n" +
+                    "\r\n" +
+                    "You have requested file: {0}", message1);
+
+
+                Console.WriteLine("client" + message);
+                string answer = "GET /HTTP1.1";
+                Console.WriteLine(answer);
 
             }
 
-            ns.Close();
-            connectionSocket.Close();
-            serverSocket.Stop();
+            finally
+            {
+                ns.Close();
+                connectionSocket.Close();
+                serverSocket.Stop();
+            }
+
+
+            //string message = sr.ReadLine();
+            //string answer = "";
+            //while (message != null && message != "")
+            //{
+
+            //    Console.WriteLine("Client: " + message);
+            //    answer = message.ToUpper();
+            //    sw.WriteLine(answer);
+            //    message = sr.ReadLine();
+
+            //}
+
+            //ns.Close();
+            //connectionSocket.Close();
+            //serverSocket.Stop();
 
             
              
