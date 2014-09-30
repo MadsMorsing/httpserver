@@ -37,7 +37,10 @@ namespace httpserver
             try
             {
                 string message = sr.ReadLine();
-                string[] words = message.Split(' ');
+                string[] words = new string[3];
+            words = message.Split(' ');
+                Console.WriteLine("tester" + words.GetValue(1));
+
                 string message1 = words[1].Replace("/", "");
 
                 sw.Write(
@@ -46,8 +49,8 @@ namespace httpserver
                     "You have requested file: {0}", message1);
 
 
-                Console.WriteLine("client" + message);
-                string answer = "GET /HTTP1.1";
+                //Console.WriteLine("client" + message);
+                string answer = "GET /HTTP 1.1";
                 Console.WriteLine(answer);
 
             }
