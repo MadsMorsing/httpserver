@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+
 namespace httpserver
 {
     class Program
@@ -13,6 +14,7 @@ namespace httpserver
 
         static void Main(string[] args)
         {
+            const string CLRF = "\r\n";
             Console.WriteLine("Hello http server");
 
             {
@@ -37,9 +39,9 @@ namespace httpserver
 
                         EchoService es = new EchoService(connectionSocket);
 
-                        Thread t = new Thread(es.doIt);
-                        t.Start();
-                        //es.doIt();
+                        //Thread t = new Thread(es.doIt);
+                       // t.Start();
+                        es.doIt();
 
                     }
                 }
