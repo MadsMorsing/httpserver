@@ -19,83 +19,57 @@ namespace httpserver
             const string webg = "/r/n";
             string name = "localhost";
        
-            //
+            
+
+
             TcpListener serverSocket = new TcpListener(8080);
             NetworkStream netstream;
-           
-            serverSocket.Start();
-
-            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-     
-            Console.WriteLine("Server activated");
-            netstream = connectionSocket.GetStream();
-            byte[] lenght = new byte[4];
-            
-            Stream ns = connectionSocket.GetStream();
-
-            StreamReader sr = new StreamReader(ns);
-            StreamWriter sw = new StreamWriter(ns);
-            sw.AutoFlush = true; // enable automatic flushing
-
-
-
-            string message = sr.ReadLine();
-            string answer = "";
-            while (message != null && message != "")
+            while (true)
             {
+                serverSocket.Start();
 
-                Console.WriteLine("Client: " + message);
-                answer = message.ToUpper();
-                sw.WriteLine(answer);
-                message = sr.ReadLine();
+                TcpClient connectionSocket = serverSocket.AcceptTcpClient();
 
-            }
-
-            ns.Close();
-            connectionSocket.Close();
-            serverSocket.Stop();
-
-            //{
-            //    try
-            //    {
-            //        TcpListener serverSocket = new TcpListener(8080);
-            //        serverSocket.Start();
-
-
-            //        while (true)
-            //        {
-            //            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-            //            //Socket connectionSocket = serverSocket.AcceptSocket();
-            //            Console.WriteLine("Server activated");
-
-            //            //Stream ns = connectionSocket.GetStream();
-            //            //Stream ns = new NetworkStream(connectionSocket);
-            //            //StreamReader sr = new StreamReader(ns);
-            //            //StreamWriter sw = new StreamWriter(ns);
-            //            //sw.AutoFlush = true; // enable automatic flushing
-
-            //            Console.WriteLine("Hello World");
-
-            //            //EchoService es = new EchoService(connectionSocket);
-            //            //es.doIt();
-
-            //            // Thread t = new Thread(es.doIt);
-            //            // t.Start();
-            //            //es.doIt();
-
-            //        }
-
-            //    }
+                Console.WriteLine("Server activated");
                
-            //    catch (ArgumentOutOfRangeException e)
-            //    {
-            //        Console.WriteLine(e);
-            //    }
+            
+
+                NetworkStream ns = connectionSocket.GetStream();
+
+                StreamReader sr = new StreamReader(ns);
+                StreamWriter sw = new StreamWriter(ns);
+                sw.AutoFlush = true; // enable automatic flushing
+
+
+                    string message = sr.ReadLine();
+                Console.WriteLine("client" + message);
+                string answer = "GET /HTTP/1.0";
+                Console.WriteLine(answer);                    
+                    //while (message != null && message != "")
+                   
+
+                        //Console.WriteLine("Client: " + message);
+                        //answer = message.ToUpper();
+                        //sw.WriteLine(answer);
+                        //message = sr.ReadLine();
+
+                        string[] tekst = new string[3]; 
+                        tekst = message.Split(' ');
+
+                        Console.WriteLine(tekst.GetValue(1)+"test");
+
+                        //sw.Write(
+                        //    "HTTP/1.0 200 Ok\r\n" +
+                        //"\r\n" + 
+                        //"You have requested file: {0}", message);
+                            
+                        sw.Write(answer);
+                Console.WriteLine(answer);
+
+                    }
+
                
-                
-
-
-            //}
+            
 
         }
 
