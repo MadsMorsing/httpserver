@@ -16,11 +16,11 @@ namespace httpserver
         static void Main(string[] args)
         {
             Console.WriteLine("Hello http server");
-
+            const string webg = "/r/n";
             string name = "localhost";
             //IPAddress ip = IPAddress.Parse("localhost");
             //Console.WriteLine(ip);
-        
+            
             TcpListener serverSocket = new TcpListener(8080);
             serverSocket.Start();
 

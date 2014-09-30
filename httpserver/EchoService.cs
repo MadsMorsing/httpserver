@@ -11,6 +11,7 @@ namespace httpserver
     
     public class EchoService
     {
+        
         private TcpClient connectionSocket;
 
         public EchoService(TcpClient connectionSocket)
