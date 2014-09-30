@@ -18,22 +18,24 @@ namespace httpserver
             Console.WriteLine("Hello http server");
             const string webg = "/r/n";
             string name = "localhost";
-            //IPAddress ip = IPAddress.Parse("localhost");
-            //Console.WriteLine(ip);
+            
             
             TcpListener serverSocket = new TcpListener(8080);
             serverSocket.Start();
 
             TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-            //Socket connectionSocket = serverSocket.AcceptSocket();
+            
             Console.WriteLine("Server activated");
 
             Stream ns = connectionSocket.GetStream();
-            // Stream ns = new NetworkStream(connectionSocket);
+            
 
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // enable automatic flushing
+
+            string getRequest = sr.ReadLine();
+
 
             string message = sr.ReadLine();
             string answer = "";
@@ -51,48 +53,8 @@ namespace httpserver
             connectionSocket.Close();
             serverSocket.Stop();
 
-            //{
-            //    try
-            //    {
-            //        TcpListener serverSocket = new TcpListener(8080);
-            //        serverSocket.Start();
-
-
-            //        while (true)
-            //        {
-            //            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-            //            //Socket connectionSocket = serverSocket.AcceptSocket();
-            //            Console.WriteLine("Server activated");
-
-            //            //Stream ns = connectionSocket.GetStream();
-            //            //Stream ns = new NetworkStream(connectionSocket);
-            //            //StreamReader sr = new StreamReader(ns);
-            //            //StreamWriter sw = new StreamWriter(ns);
-            //            //sw.AutoFlush = true; // enable automatic flushing
-
-            //            Console.WriteLine("Hello World");
-
-            //            //EchoService es = new EchoService(connectionSocket);
-            //            //es.doIt();
-
-            //            // Thread t = new Thread(es.doIt);
-            //            // t.Start();
-            //            //es.doIt();
-
-            //        }
-
-            //    }
-               
-            //    catch (ArgumentOutOfRangeException e)
-            //    {
-            //        Console.WriteLine(e);
-            //    }
-               
-                
-
-
-            //}
-
+            
+             
         }
 
 
