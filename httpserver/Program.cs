@@ -18,22 +18,26 @@ namespace httpserver
             Console.WriteLine("Hello http server");
             const string webg = "/r/n";
             string name = "localhost";
-            //IPAddress ip = IPAddress.Parse("localhost");
-            //Console.WriteLine(ip);
-            
+       
+            //
             TcpListener serverSocket = new TcpListener(8080);
+            NetworkStream netstream;
+           
             serverSocket.Start();
 
             TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-            //Socket connectionSocket = serverSocket.AcceptSocket();
+     
             Console.WriteLine("Server activated");
-
+            netstream = connectionSocket.GetStream();
+            byte[] lenght = new byte[4];
+            
             Stream ns = connectionSocket.GetStream();
-            // Stream ns = new NetworkStream(connectionSocket);
 
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // enable automatic flushing
+
+
 
             string message = sr.ReadLine();
             string answer = "";
