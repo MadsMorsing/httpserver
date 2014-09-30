@@ -18,55 +18,46 @@ namespace httpserver
             Console.WriteLine("Hello http server");
             const string webg = "/r/n";
             string name = "localhost";
-       
-            
 
-
+            //
             TcpListener serverSocket = new TcpListener(8080);
-            NetworkStream netstream;
-            while (true)
+            serverSocket.Start();
+
+            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
+
+            Console.WriteLine("Server activated");
+
+            Stream ns = connectionSocket.GetStream();
+
+
+            StreamReader sr = new StreamReader(ns);
+            StreamWriter sw = new StreamWriter(ns);
+            sw.AutoFlush = true; // enable automatic flushing
+
+            try
             {
-                serverSocket.Start();
+                string message = sr.ReadLine();
+                string[] words = message.Split(' ');
+                string message1 = words[1].Replace("/", "");
 
-                TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-
-                Console.WriteLine("Server activated");
-               
-            
-
-                NetworkStream ns = connectionSocket.GetStream();
-
-                StreamReader sr = new StreamReader(ns);
-                StreamWriter sw = new StreamWriter(ns);
-                sw.AutoFlush = true; // enable automatic flushing
+                sw.Write(
+                    "HTTP/1.1 200 OK\r\n" +
+                    "\r\n" +
+                    "You have requested file: {0}", message1);
 
 
-                    string message = sr.ReadLine();
                 Console.WriteLine("client" + message);
-                string answer = "GET /HTTP/1.0";
-                Console.WriteLine(answer);                    
-                    //while (message != null && message != "")
-                   
-
-                        //Console.WriteLine("Client: " + message);
-                        //answer = message.ToUpper();
-                        //sw.WriteLine(answer);
-                        //message = sr.ReadLine();
-
-                        string[] tekst = new string[3]; 
-                        tekst = message.Split(' ');
-
-                        Console.WriteLine(tekst.GetValue(1)+"test");
-
-                        //sw.Write(
-                        //    "HTTP/1.0 200 Ok\r\n" +
-                        //"\r\n" + 
-                        //"You have requested file: {0}", message);
-                            
-                        sw.Write(answer);
+                string answer = "GET /HTTP1.0";
                 Console.WriteLine(answer);
 
-                    }
+            }
+
+            finally
+            {
+                ns.Close();
+                connectionSocket.Close();
+                serverSocket.Stop();
+            }
 
                
             
