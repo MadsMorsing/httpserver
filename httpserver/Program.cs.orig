@@ -16,25 +16,40 @@ namespace httpserver
         static void Main(string[] args)
         {
             Console.WriteLine("Hello http server");
-            
+<<<<<<< HEAD
+
             HttpServer server = new HttpServer();
             
+=======
+            
+            HttpServer server = new HttpServer();
+
+>>>>>>> origin/master
             while (true)
             {
                 server.StartServer();
             }
 
+<<<<<<< HEAD
         
             
             
             
+
+
       
 
             
              
         }
+
+
+
+
+
+=======
+            
                 
-
-
+>>>>>>> origin/master
         }
     }
