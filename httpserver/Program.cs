@@ -18,20 +18,16 @@ namespace httpserver
             Console.WriteLine("Hello http server");
             
             HttpServer server = new HttpServer();
-            
+
             while (true)
             {
                 server.StartServer();
+                server.dostuff();
             }
 
-        
-            
-            
-            
-      
 
-            
-             
+
+
         }
                 
 
