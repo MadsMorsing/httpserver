@@ -15,49 +15,19 @@ namespace httpserver
         static void Main(string[] args)
         {
             Console.WriteLine("Hello http server");
+
+            HttpServer server = new HttpServer();
+
+            while (true)
+            {
+                server.StartServer();
+            }
+
             const string webg = "/r/n";
             string name = "localhost";
             
             
-            TcpListener serverSocket = new TcpListener(8080);
-            serverSocket.Start();
-
-            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
             
-            Console.WriteLine("Server activated");
-
-            Stream ns = connectionSocket.GetStream();
-            
-
-            StreamReader sr = new StreamReader(ns);
-            StreamWriter sw = new StreamWriter(ns);
-            sw.AutoFlush = true; // enable automatic flushing
-
-            try
-            {
-                string message = sr.ReadLine();
-                string[] words = new string[3];
-            words = message.Split(' ');
-                Console.WriteLine("tester" + words.GetValue(1));
-
-                sw.Write(
-                    "HTTP/1.1 200 OK\r\n" +
-                    "\r\n" +
-                    "You have requested file: {0}", message);
-
-
-                //Console.WriteLine("client" + message);
-                string answer = "GET /HTTP 1.1";
-                Console.WriteLine(answer);
-
-            }
-
-            finally
-            {
-                ns.Close();
-                connectionSocket.Close();
-                serverSocket.Stop();
-            }
 
 
       
@@ -84,4 +54,3 @@ namespace httpserver
 
         }
     }
-}
