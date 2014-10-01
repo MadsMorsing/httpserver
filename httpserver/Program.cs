@@ -12,23 +12,22 @@ namespace httpserver
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             Console.WriteLine("Hello http server");
             const string webg = "/r/n";
             string name = "localhost";
-
-            //
+            
+            
             TcpListener serverSocket = new TcpListener(8080);
             serverSocket.Start();
 
             TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-
+            
             Console.WriteLine("Server activated");
 
             Stream ns = connectionSocket.GetStream();
-
+            
 
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
@@ -37,17 +36,18 @@ namespace httpserver
             try
             {
                 string message = sr.ReadLine();
-                string[] words = message.Split(' ');
-                string message1 = words[1].Replace("/", "");
+                string[] words = new string[3];
+            words = message.Split(' ');
+                Console.WriteLine("tester" + words.GetValue(1));
 
                 sw.Write(
                     "HTTP/1.1 200 OK\r\n" +
                     "\r\n" +
-                    "You have requested file: {0}", message1);
+                    "You have requested file: {0}", message);
 
 
-                Console.WriteLine("client" + message);
-                string answer = "GET /HTTP1.0";
+                //Console.WriteLine("client" + message);
+                string answer = "GET /HTTP 1.1";
                 Console.WriteLine(answer);
 
             }
@@ -59,11 +59,29 @@ namespace httpserver
                 serverSocket.Stop();
             }
 
-               
-            
 
+      
+
+            
+             
         }
 
 
+
+            #region 
+
+            //HttpServer httpServer = new HttpServer();
+
+            //while (true)
+            //{
+            //    httpServer.WaitForClient();
+            //}
+
+            //httpServer.CloseServer();
+            //Console.ReadKey();
+
+            #endregion
+
+        }
     }
 }
