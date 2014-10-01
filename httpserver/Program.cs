@@ -17,14 +17,13 @@ namespace httpserver
             Console.WriteLine("Hello http server");
 
             HttpServer server = new HttpServer();
-
+            
             while (true)
             {
                 server.StartServer();
             }
 
-            const string webg = "/r/n";
-            string name = "localhost";
+        
             
             
             
@@ -38,19 +37,7 @@ namespace httpserver
 
 
 
-            #region 
 
-            //HttpServer httpServer = new HttpServer();
-
-            //while (true)
-            //{
-            //    httpServer.WaitForClient();
-            //}
-
-            //httpServer.CloseServer();
-            //Console.ReadKey();
-
-            #endregion
 
         }
     }
