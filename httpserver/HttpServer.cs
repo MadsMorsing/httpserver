@@ -46,7 +46,7 @@ namespace httpserver
                 {
                     
                
-                //Request line
+                //Request lines
                 sw.Write(
                     "HTTP/1.1 200 OK\r\n" +
                     "\r\n" +
