@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,55 +17,16 @@ namespace httpserver
         static void Main(string[] args)
         {
             Console.WriteLine("Hello http server");
-            const string webg = "/r/n";
-            string name = "localhost";
             
-            
-            TcpListener serverSocket = new TcpListener(8080);
-            serverSocket.Start();
+            HttpServer server = new HttpServer();
 
-            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-            
-            Console.WriteLine("Server activated");
-
-            Stream ns = connectionSocket.GetStream();
-            
-
-            StreamReader sr = new StreamReader(ns);
-            StreamWriter sw = new StreamWriter(ns);
-            sw.AutoFlush = true; // enable automatic flushing
-
-            try
+            while (true)
             {
-                string message = sr.ReadLine();
-                string[] words = new string[3];
-            words = message.Split(' ');
-                Console.WriteLine("tester" + words.GetValue(1));
-
-                sw.Write(
-                    "HTTP/1.1 200 OK\r\n" +
-                    "\r\n" +
-                    "You have requested file: {0}", message);
-
-
-                //Console.WriteLine("client" + message);
-                string answer = "GET /HTTP 1.1";
-                Console.WriteLine(answer);
-
+                server.StartServer();
             }
 
-            finally
-            {
-                ns.Close();
-                connectionSocket.Close();
-                serverSocket.Stop();
-            }
-
-
-      
-
             
-             
+                
         }
 
 
