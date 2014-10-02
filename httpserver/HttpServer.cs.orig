@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
+=======
+using System.IO;
+using System.Linq;
+>>>>>>> origin/master
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +18,12 @@ namespace httpserver
     public class HttpServer
     {
         public static readonly int DefaultPort = 8080;
+<<<<<<< HEAD
         private static readonly string RootCatalog = @"C:/Users/Johan/Desktop/New folder/Hello_World.html";
+=======
+        private static readonly string RootCatalog = @"C:/Users/Mads Morsing/Desktop/httpserver_project.html";
+
+>>>>>>> origin/master
         public HttpServer()
         {
             
@@ -22,6 +32,14 @@ namespace httpserver
         public void StartServer()
         {
 
+<<<<<<< HEAD
+=======
+
+            const string webg = "/r/n";
+            string name = "localhost";
+            
+
+>>>>>>> origin/master
             TcpListener serverSocket = new TcpListener(8080);
             serverSocket.Start();
 
@@ -31,7 +49,11 @@ namespace httpserver
 
             Stream ns = connectionSocket.GetStream();
 
+<<<<<<< HEAD
             FileStream fs;
+=======
+
+>>>>>>> origin/master
             StreamReader sr = new StreamReader(ns);
             StreamWriter sw = new StreamWriter(ns);
             sw.AutoFlush = true; // enable automatic flushing
@@ -42,6 +64,7 @@ namespace httpserver
                 string[] words = new string[3];
                 words = message.Split(' ');
                 Console.WriteLine("tester" + words.GetValue(1));
+<<<<<<< HEAD
                 using (fs = File.OpenRead(RootCatalog))
                 {
                   
@@ -60,6 +83,24 @@ namespace httpserver
 
                 //Console.WriteLine("client" + message);
                 string answer = "GET /HTTP 1.0";
+=======
+
+                using (FileStream fs = File.OpenRead(RootCatalog))
+                {
+                    fs.CopyTo(sw.BaseStream);
+                    sw.BaseStream.Flush();
+                    sw.Flush();
+
+
+                    sw.Write(
+                        "HTTP/1.1 200 OK\r\n" +
+                        "\r\n" +
+                        "You have requested file: {0}", words[1]);
+
+                }
+                //Console.WriteLine("client" + message);
+                string answer = "GET /HTTP 1.1";
+>>>>>>> origin/master
                 Console.WriteLine(answer);
 
             }
@@ -71,9 +112,11 @@ namespace httpserver
                 serverSocket.Stop();
             }
         }
+<<<<<<< HEAD
 
 
 
-        }
+=======
+>>>>>>> origin/master
     }
 }
