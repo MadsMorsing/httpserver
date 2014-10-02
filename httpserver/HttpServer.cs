@@ -49,15 +49,13 @@ namespace httpserver
 
                 using (FileStream fs = File.OpenRead(RootCatalog))
                 {
+                    sw.Write(
+                        "HTTP/1.0 200 OK\r\n" +
+                        "\r\n" +
+                        "You have requested file: {0}", words[1]);
                     fs.CopyTo(sw.BaseStream);
                     sw.BaseStream.Flush();
                     sw.Flush();
-
-
-                    sw.Write(
-                        "HTTP/1.1 200 OK\r\n" +
-                        "\r\n" +
-                        "You have requested file: {0}", words[1]);
 
                 }
                 //Console.WriteLine("client" + message);
