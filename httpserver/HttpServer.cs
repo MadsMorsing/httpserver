@@ -1,79 +1,101 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace httpserver
 {
+    /// <summary>
+    /// Vores server.
+    /// </summary>
     public class HttpServer
     {
-        public static readonly int DefaultPort = 8080;
-        private static readonly string RootCatalog = @"C:/Users/Johan/Desktop/New folder/Hello_World.html";
+        #region declare variable.
+        public static readonly int DefaultPort = 8080; // Porten vi bruger til forbindelse.
+        private static readonly string RootCatalog = @"C:/Users/Johan/Desktop/New folder/Hello_World.html"; //Destinationen af filen der vises, prøv evt. med Environment.GetFolderPath(Environment.SpecialFolder.Desktop); Men der kommer sikkerhed i vejen
+        private static TcpListener serverSocket;// = new TcpListener(8080); //Socket der lytter til port 8080. Al forbindelse løber mellem sockets.
+
+        private TcpClient connectionSocket;
+        private static Stream ns;
+           private FileStream fs;
+        private StreamReader sr;
+        private StreamWriter sw;         
+            #endregion
+        /// <summary>
+        /// HttpServer constructor.
+        /// </summary>
         public HttpServer()
         {
             
         }
 
+      
+        
+     
+
+        /// <summary>
+        /// Starter serveren.
+        /// </summary>
         public void StartServer()
         {
 
-            TcpListener serverSocket = new TcpListener(8080);
+           serverSocket = new TcpListener(8080);
             serverSocket.Start();
-
-            TcpClient connectionSocket = serverSocket.AcceptTcpClient();
-
             Console.WriteLine("Server activated");
+            connectionSocket = serverSocket.AcceptTcpClient();
+            ns = connectionSocket.GetStream();
 
-            Stream ns = connectionSocket.GetStream();
+           
+        }
 
-            FileStream fs;
-            StreamReader sr = new StreamReader(ns);
-            StreamWriter sw = new StreamWriter(ns);
-            sw.AutoFlush = true; // enable automatic flushing
-
-            try
-            {
-                string message = sr.ReadLine();
-                string[] words = new string[3];
-                words = message.Split(' ');
-                Console.WriteLine("tester" + words.GetValue(1));
-                using (fs = File.OpenRead(RootCatalog))
+  
+        /// <summary>
+        /// Vores "indhold" fra vores server til klienten (Request+Response)
+        /// </summary>
+        public void dostuff()
+        {
+             sr = new StreamReader(ns);
+             sw = new StreamWriter(ns);
+             sw.AutoFlush = true; // enable automatic flushing
+            
+                try
                 {
-                  
-               
-                //Request lines
-                sw.Write(
-                    "HTTP/1.0 200 OK\r\n" +
-                    "\r\n" +
-                    "You have requested file: {0}", words[1]);
+                    string message = sr.ReadLine(); // læser request fra browser
+                    string[] words = new string[3];
+                    words = message.Split(' '); //Det er nødvendigt at splitte beskeden op af hensyn til standarderne i protokollen, samt \r\n (carriage-return og line-feed)
+                    Console.WriteLine("tester" + words.GetValue(1));
+                    using (fs = File.OpenRead(RootCatalog)) //Åbner vores fil i den angivne destination som RootCatalog udgør.
+                    {
 
-                fs.CopyTo(sw.BaseStream);
-                sw.BaseStream.Flush();
-                sw.Flush();
+
+                        //Request lines
+                        sw.Write(
+                            "HTTP/1.0 200 OK\r\n" +
+                            "\r\n" +
+                            "You have requested file: {0}", words[1]); //Grunden til [1] er at det er her destinationen ligger.
+
+                        fs.CopyTo(sw.BaseStream); //Kopierer indholdet ovenover til streamwriteren, som så flusher.
+                        sw.BaseStream.Flush();
+                        sw.Flush();
+
+                    }
+
+                    
+                    string answer = "GET /HTTP 1.0";
+                    Console.WriteLine(answer);
 
                 }
-
-                //Console.WriteLine("client" + message);
-                string answer = "GET /HTTP 1.0";
-                Console.WriteLine(answer);
-
-            }
-
-            finally
-            {
-                ns.Close();
-                connectionSocket.Close();
-                serverSocket.Stop();
-            }
-        }
-
-
-
+                    //Lukker vores forbindelser
+                finally
+                {
+                    ns.Close();
+                    connectionSocket.Close();
+                    serverSocket.Stop();
+                    sw.Close();
+                    sr.Close();
+                }
         }
     }
+
 }
+    
+
