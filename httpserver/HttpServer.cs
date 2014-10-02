@@ -20,6 +20,7 @@ namespace httpserver
         private StreamReader sr;
         private StreamWriter sw;         
             #endregion
+
         /// <summary>
         /// HttpServer constructor.
         /// </summary>
@@ -27,10 +28,6 @@ namespace httpserver
         {
             connectionSocket = client;
         }
-
-      
-        
-     
 
         /// <summary>
         /// Starter serveren.
