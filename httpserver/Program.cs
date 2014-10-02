@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
@@ -9,13 +10,14 @@ namespace httpserver
         static void Main(string[] args)
         {
             Logger log = new Logger();
-            log.start();
+            //log.start();
             Console.WriteLine("Hello http server");
             TcpClient connectionSocket;
             TcpListener serverSocket;
            
             serverSocket = new TcpListener(8080); //Angiver porten til sockets kommunikation
             serverSocket.Start(); //Starter med at lytte.
+            log.WriteToLog("Server started", EventLogEntryType.Information, 1337);
             Console.WriteLine("Server activated");
             while (true)
             {
