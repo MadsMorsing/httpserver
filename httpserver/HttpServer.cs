@@ -24,25 +24,24 @@ namespace httpserver
         /// <summary>
         /// HttpServer constructor.
         /// </summary>
-        public HttpServer()
+        public HttpServer(TcpClient client)
         {
-            
+            connectionSocket = client;
         }
 
         /// <summary>
         /// Starter serveren.
         /// </summary>
-        public void StartServer()
-        {
+        //public void StartServer()
+        //{
 
-           serverSocket = new TcpListener(8080);
-            serverSocket.Start();
-            Console.WriteLine("Server activated");
-            connectionSocket = serverSocket.AcceptTcpClient();
-            ns = connectionSocket.GetStream();
 
            
-        }
+            
+          
+
+           
+        //}
 
   
         /// <summary>
@@ -50,6 +49,7 @@ namespace httpserver
         /// </summary>
         public void dostuff()
         {
+            ns = connectionSocket.GetStream();
              sr = new StreamReader(ns);
              sw = new StreamWriter(ns);
              sw.AutoFlush = true; // enable automatic flushing

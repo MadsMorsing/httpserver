@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace httpserver
@@ -7,17 +8,25 @@ namespace httpserver
     {
         static void Main(string[] args)
         {
+            Logger log = new Logger();
+            log.start();
             Console.WriteLine("Hello http server");
-            HttpServer server = new HttpServer();
-
+            TcpClient connectionSocket;
+            TcpListener serverSocket;
+           
+            serverSocket = new TcpListener(8080); //Angiver porten til sockets kommunikation
+            serverSocket.Start(); //Starter med at lytte.
+            Console.WriteLine("Server activated");
             while (true)
             {
 
+                connectionSocket = serverSocket.AcceptTcpClient();
+                HttpServer server = new HttpServer(connectionSocket);
                 Task.Factory.StartNew(() =>
                 {
-                    server.StartServer();
+                    //server.StartServer();
                     server.dostuff();
-                }).Wait();
+                });
                 
               
             }
