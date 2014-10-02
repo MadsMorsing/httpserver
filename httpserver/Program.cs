@@ -17,12 +17,13 @@ namespace httpserver
            
             serverSocket = new TcpListener(8080); //Angiver porten til sockets kommunikation
             serverSocket.Start(); //Starter med at lytte.
-            log.WriteToLog("Server started", EventLogEntryType.Information, 1337);
+            log.WriteToLog("Server started for the first time.", EventLogEntryType.Information, 1337);
             Console.WriteLine("Server activated");
             while (true)
             {
 
                 connectionSocket = serverSocket.AcceptTcpClient();
+                log.WriteToLog("Client opened", EventLogEntryType.Information, 1337);
                 HttpServer server = new HttpServer(connectionSocket);
                 Task.Factory.StartNew(() =>
                 {

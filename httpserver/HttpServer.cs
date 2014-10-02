@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Sockets;
 
@@ -13,7 +14,7 @@ namespace httpserver
         public static readonly int DefaultPort = 8080; // Porten vi bruger til forbindelse.
         private static readonly string RootCatalog = @"C:/Users/Johan/Desktop/New folder/Hello_World.html"; //Destinationen af filen der vises, prøv evt. med Environment.GetFolderPath(Environment.SpecialFolder.Desktop); Men der kommer sikkerhed i vejen
         private static TcpListener serverSocket;// = new TcpListener(8080); //Socket der lytter til port 8080. Al forbindelse løber mellem sockets.
-
+        Logger log = new Logger();
         private TcpClient connectionSocket;
         private static Stream ns;
            private FileStream fs;
@@ -69,7 +70,7 @@ namespace httpserver
                             "HTTP/1.0 200 OK\r\n" +
                             "\r\n" +
                             "You have requested file: {0}", words[1]); //Grunden til [1] er at det er her destinationen ligger.
-
+                        log.WriteToLog("File requested", EventLogEntryType.Information, 1337);
                         fs.CopyTo(sw.BaseStream); //Kopierer indholdet ovenover til streamwriteren, som så flusher.
                         sw.BaseStream.Flush();
                         sw.Flush();
@@ -84,11 +85,13 @@ namespace httpserver
                     //Lukker vores forbindelser
                 finally
                 {
+                    log.WriteToLog("Server Shutdown", EventLogEntryType.Information, 1337);
                     ns.Close();
                     connectionSocket.Close();
                     serverSocket.Stop();
                     sw.Close();
                     sr.Close();
+                    
                 }
         }
     }

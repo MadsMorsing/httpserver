@@ -25,6 +25,12 @@ namespace httpserver
 
         public void WriteToLog(string s, EventLogEntryType info, int num )
         {
+
+            if (!EventLog.SourceExists(Source))
+            {
+                EventLog.CreateEventSource(Source, sLog);
+            }
+
             string machineName = ".";
             using (EventLog log = new EventLog(sLog, machineName, Source))
             {
