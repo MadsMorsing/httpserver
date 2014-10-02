@@ -10,7 +10,7 @@ namespace httpserver
         static void Main(string[] args)
         {
             Logger log = new Logger();
-            //log.start();
+            //log.start();//
             Console.WriteLine("Hello http server");
             TcpClient connectionSocket;
             TcpListener serverSocket;
