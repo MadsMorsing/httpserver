@@ -61,9 +61,25 @@ namespace httpserver
                     string[] words = new string[3];
                     words = message.Split(' '); //Det er nødvendigt at splitte beskeden op af hensyn til standarderne i protokollen, samt \r\n (carriage-return og line-feed)
                     Console.WriteLine("tester" + words.GetValue(1));
+                    if (!File.Exists(RootCatalog))
+                    {
+
+                        sw.Write(
+                        "HTTP/1.0 404 FILE NOT FOUND\r\n" +
+                        "\r\n" +
+                        "Error 404: File Not Found: {0}", words[1]); //Grunden til [1] er at det er her destinationen ligger.
+                        log.WriteToLog("File requested", EventLogEntryType.Information, 1337);
+                        fs.CopyTo(sw.BaseStream); //Kopierer indholdet ovenover til streamwriteren, som så flusher.
+                        sw.BaseStream.Flush();
+                        sw.Flush();
+                        Console.WriteLine("Error 404: File not found.");
+                        
+                    }
+                    else
                     using (fs = File.OpenRead(RootCatalog)) //Åbner vores fil i den angivne destination som RootCatalog udgør.
                     {
 
+                        
 
                         //Request lines
                         sw.Write(

@@ -9,7 +9,9 @@ namespace httpserver
     {
         static void Main(string[] args)
         {
+            
             Logger log = new Logger();
+            
             //log.start();//
             Console.WriteLine("Hello http server");
             TcpClient connectionSocket;
@@ -27,6 +29,7 @@ namespace httpserver
                 HttpServer server = new HttpServer(connectionSocket);
                 Task.Factory.StartNew(() =>
                 {
+                    
                     //server.StartServer();
                     server.dostuff();
                 });

@@ -11,17 +11,7 @@ namespace httpserver
         private const string Source = "HttpServer";
         private const string sLog = "Application";
         private const string Message = "Event occur";
-        public void start()
-        {
-
-            if (!EventLog.SourceExists(Source))
-            {
-                EventLog.CreateEventSource(Source, sLog);
-            }
-
-            WriteToLog("", EventLogEntryType.Information, 1337);
-
-        }
+     
 
         public void WriteToLog(string s, EventLogEntryType info, int num )
         {
